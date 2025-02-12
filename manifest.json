@@ -1,0 +1,12 @@
+{
+    "manifest_version": 3,
+    "name": "csmoney filter",
+    "version": "1.0",
+    "description": "Додаткові можливості фільтрування для сайту csmoney",
+    "permissions": ["activeTab"],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": "default_icon.png"
+    }
+  }
+  

@@ -1,0 +1,19 @@
+body {
+    width: 100%;
+}
+
+.discountRange {
+    justify-content: center;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.inputDiscountBox {
+    display: flex;
+    margin: 0 10px;
+}
+
+.inputDiscountPercent {
+    width: 50px;
+    margin: 0 5px;
+}
