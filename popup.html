@@ -8,24 +8,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="discountRange">
-        <input type="checkbox" id="discountRangeCheckbox">
-        <div class="inputDiscountBox">
-            <label for="inputMinDiscountPercent">
-                <span>Мін: </span>
-            </label>
-            <input type="text" id="inputMinDiscountPercent" class="inputDiscountPercent">
-            <span>%</span>
-        </div>
-        <div class="inputDiscountBox">
-            <label for="inputMaxDiscountPercent">
-                <span>Макс: </span>
-            </label>
-            <input type="text" id="inputMaxDiscountPercent" class="inputDiscountPercent">
-            <span>%</span>
-        </div>
+    <div class="discount-range">
+        <input type="checkbox" id="discount-range-checkbox">
+        <label for="min-range" class="range-label">
+            Мін:
+            <input type="text" id="min-range" class="input-range-field">
+            %
+        </label>
+        <label for="max-range" class="range-label">
+            Макс:
+            <input type="text" id="max-range" class="input-range-field">
+            %
+        </label>
     </div>
-
-
 </body>
 </html>

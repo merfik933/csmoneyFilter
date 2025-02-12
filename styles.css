@@ -1,19 +1,26 @@
 body {
-    width: 100%;
+    background-color: #1c1a24;
+    color: #fff;
+    min-width: 200px;
 }
 
-.discountRange {
-    justify-content: center;
-    display: flex;
-    flex-wrap: nowrap;
+input[type="checkbox"] {
+    margin: 0;
 }
 
-.inputDiscountBox {
-    display: flex;
+input[type="text"] {
+    padding: 0;
+    border: 0;
+}
+
+.discount-range {
+    white-space: nowrap;
+}
+
+.range-label {
     margin: 0 10px;
 }
 
-.inputDiscountPercent {
-    width: 50px;
-    margin: 0 5px;
+.input-range-field {
+    width: 30px;
 }
