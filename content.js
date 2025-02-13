@@ -1,6 +1,5 @@
 console.log("Hello from content.js");
 
-let isFilterByDiscount = false;
 let minDiscount = 0;
 let maxDiscount = 100;
 
@@ -8,19 +7,17 @@ let timeDelay = 700;
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "applyFilter") {        
-        isFilterByDiscount = message.isChecked;
         minDiscount = message.min;
         maxDiscount = message.max;
         timeDelay = message.delay;
     }
-
 });
 
 function filterProducts() {
     let products = document.querySelectorAll(".InventorySearchResults_item__s9sB7");
     let counter = 0;
     products.forEach((product) => {
-        if (isFilterByDiscount) {
+        if (!(minDiscount === 0 && maxDiscount === 100)) {
             const discountElement = product.querySelector(".Tag-module_green__5A03j .Tag-module_content__uLsTI");
             if (!discountElement) {
                 if (minDiscount > 0) {
