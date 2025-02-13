@@ -1,19 +1,19 @@
 body {
+    font-family: Arial, sans-serif;
     background-color: #1c1a24;
     color: #fff;
     min-width: 200px;
 }
 
-input[type="checkbox"] {
-    margin: 0;
+h2 {
+    font-size: 1.4em;
 }
 
-input[type="text"] {
-    padding: 0;
-    border: 0;
+input[type="number"] {
+    width: 50px;
 }
 
-.discount-range {
+.row {
     white-space: nowrap;
 }
 
@@ -21,6 +21,16 @@ input[type="text"] {
     margin: 0 10px;
 }
 
-.input-range-field {
-    width: 30px;
+.apply-filter-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#apply-filter {
+    background-color: #3ab04f;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    padding: 5px;
 }

@@ -8,18 +8,35 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="discount-range">
-        <input type="checkbox" id="discount-range-checkbox">
-        <label for="min-range" class="range-label">
-            Мін:
-            <input type="text" id="min-range" class="input-range-field">
-            %
-        </label>
-        <label for="max-range" class="range-label">
-            Макс:
-            <input type="text" id="max-range" class="input-range-field">
-            %
-        </label>
+    <section class="discount-filter">
+        <h2>Фільтр знижок</h2>
+        <div class="row">
+            <label for="min-range" class="range-label">
+                Мін:
+                <input type="number" id="min-range" class="input-range-field" min="0" max="100" value="0">
+                %
+            </label>
+            <label for="max-range" class="range-label">
+                Макс:
+                <input type="number" id="max-range" class="input-range-field" min="0" max="100" value="100">
+                %
+            </label>
+        </div>
+    </section>
+
+    <h2>Налаштування</h2>
+    <section class="settings">
+        <div class="row">
+            <label for="delay" class="settings-label">
+                Затримка:
+                <input type="number" id="delay" class="input-settings-field" min="0" value="700">
+                мс
+            </label>
+        </div>
+    </div>
+    
+    <div class="apply-filter-container">
+        <button id="apply-filter">Застосувати фільтр</button>
     </div>
 </body>
 </html>
