@@ -6,6 +6,7 @@
     <title>csmoney filter</title>
     <script src="popup.js" defer></script>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0&icon_names=delete" />
 </head>
 <body>
     <section class="discount-filter">
@@ -24,11 +25,69 @@
         </div>
     </section>
 
-    <h2>Налаштування</h2>
+    <section class="blacklist-filter">
+        <h2>Чорний\Білий список</h2>
+        <div class="row">
+            <div class="column" id="image-filter">
+                <h3>
+                    <input type="checkbox" id="image-filter-checkbox">
+                    Фільтр по url зображень
+                </h3>
+                <select id="image-filter-type">
+                    <option value="blacklist">Чорний список</option>
+                    <option value="whitelist">Білий список</option>
+                </select>
+                <div class="dropdown">
+                    <button class="dropbtn">Вибрати url зображення ></button>
+                    <div class="dropdown-content">
+                        <button class="add-new" id="add-new-url">Додати новий</button>
+                    </div>
+                </div>
+                <p>Або завантажте файл з url зображень:</p>
+                <input id="upload-image-urls" type="file" id="image-filter-file" accept=".csv">
+            </div>
+            <div class="column" id="mv-filter">
+                <h3>
+                    <input type="checkbox" id="mv-filter-checkbox">
+                    Фільтр по MV/FN/т.д.
+                </h3>
+                <div class="blacklist-box">
+                    <h4>
+                        <input type="checkbox" id="mv-filter-blacklist-checkbox">
+                        Чорний список:
+                    </h4>
+                    <div class="dropdown blacklist">
+                        <button class="dropbtn">Вибрати MV/FN/т.д. ></button>
+                        <div class="dropdown-content">
+                            <button class="add-new" id="add-new-mv">Додати новий</button>
+                        </div>
+                    </div>
+                    <p>Aбо завантажте файл з MV/FN/т.д.:</p>
+                    <input id="upload-mv-blacklist" type="file" id="mv-filter-file" accept=".csv">
+                </div>
+                <div class="whitelist-box">
+                    <h4>
+                        <input type="checkbox" id="mv-filter-whitelist-checkbox">
+                        Білий список:
+                    </h4>
+                    <div class="dropdown whitelist">
+                        <button class="dropbtn">Вибрати MV/FN/т.д. ></button>
+                        <div class="dropdown-content">
+                            <button class="add-new" id="add-new-mv">Додати новий</button>
+                        </div>
+                    </div>
+                    <p>Aбо завантажте файл з MV/FN/т.д.:</p>
+                    <input id="upload-mv-whitelist" type="file" id="mv-filter-file" accept=".csv">
+                </div>
+            </div>
+        </div>
+    </section>  
+    
     <section class="settings">
+        <h2>Налаштування</h2>
         <div class="row">
             <label for="delay" class="settings-label">
-                Затримка:
+                Затримка фільтрації:
                 <input type="number" id="delay" class="input-settings-field" min="0" value="700">
                 мс
             </label>
