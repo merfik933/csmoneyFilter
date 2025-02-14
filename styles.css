@@ -18,6 +18,23 @@ h4 {
     margin-top: 0;
 }
 
+.delete-all {
+    background-color: #e33f9d;
+    color: #fff;
+    border: 0;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+
+.delete-all:hover {
+    background-color: #c12b85;
+}
+
+.delete-all:active {
+    background-color: #a41e6b;
+}
+
 .blacklist-box, .whitelist-box {
     border: 1px solid #403d4d;
     padding: 5px;
@@ -111,7 +128,8 @@ input[type="file"] {
 .dropdown:hover .dropdown-content {
     display: block;
     max-height: 100px;
-    max-width: 300px;
+    min-width: 150px;
+    max-width: 200px;
     overflow: auto;
 }
 

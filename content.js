@@ -80,22 +80,25 @@ function filterProducts() {
         }
         if (is_mv_checked) {
             const mvElements = product.querySelectorAll("span.CsgoDescriptionSmallZone_token___Y7iq");
-            let is_filtered = false;
+            let is_filtered_blacklist = false;
+            let is_filtered_whitelist = true;
             mvElements.forEach((element) => {
                 if (is_mv_blacklist_checked) {
                     if (blacklisted_mvs_list.includes(element.innerText.trim().toUpperCase())) {
-                        is_filtered = true;
+                        is_filtered_blacklist = true;
                         return;
                     }
                 }
                 if (is_mv_whitelist_checked) {
                     if (whitelisted_mvs_list.includes(element.innerText.trim().toUpperCase())) {
-                        is_filtered = false;
+                        is_filtered_whitelist = false;
                         return;
                     }
+                } else {
+                    is_filtered_whitelist = false;
                 }
             });
-            if (is_filtered) {
+            if (is_filtered_blacklist || is_filtered_whitelist) {
                 setTimeout(() => {
                     product.style.display = "none";
                 }, timeDelay);

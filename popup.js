@@ -8,6 +8,40 @@ const uploadImageUrlsCsv = document.getElementById("upload-image-urls");
 const uploadMvBlacklistCsv = document.getElementById("upload-mv-blacklist");
 const uploadMvWhitelistCsv= document.getElementById("upload-mv-whitelist");
 
+const deleteAllImageUrls = document.getElementById("delete-all-image-urls");
+const deleteAllMvBlacklist = document.getElementById("delete-all-blacklist-mv");
+const deleteAllMvWhitelist = document.getElementById("delete-all-whitelist-mv");
+
+deleteAllImageUrls.addEventListener("click", () => {
+    const imageList = document.querySelector("#image-filter .dropdown-content");
+    const items = imageList.querySelectorAll(".list-item");
+    items.forEach((item) => {
+        if (!item.classList.contains("add-new")) {
+            item.remove();
+        }
+    });
+});
+
+deleteAllMvBlacklist.addEventListener("click", () => {
+    const blacklist = document.querySelector("#mv-filter .blacklist .dropdown-content");
+    const items = blacklist.querySelectorAll(".list-item");
+    items.forEach((item) => {
+        if (!item.classList.contains("add-new")) {
+            item.remove();
+        }
+    });
+});
+
+deleteAllMvWhitelist.addEventListener("click", () => {
+    const whitelist = document.querySelector("#mv-filter .whitelist .dropdown-content");
+    const items = whitelist.querySelectorAll(".list-item");
+    items.forEach((item) => {
+        if (!item.classList.contains("add-new")) {
+            item.remove();
+        }
+    });
+});
+
 uploadImageUrlsCsv.addEventListener("change", (event) => {
     const reader = new FileReader();
     reader.onload = (e) => {
