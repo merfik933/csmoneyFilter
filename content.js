@@ -21,7 +21,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         image_urls = {};
         image_urls_string.forEach((url) => {
             elements = url.split(';');
-            image_urls[elements[0]] = elements.slice(1)
+            if (elements.length > 1) {
+                image_urls[elements[0]] = elements.slice(1)
+            } else {
+                image_urls[url] = [];
+            }
+            
         });
     }
 });
@@ -58,42 +63,46 @@ function filterProducts() {
             if (image_url_filter_type === "blacklist") {
                 for (const [url, mvs] of Object.entries(image_urls)) {
                     if (imageElementSrc.includes(url)) {
-                        mvs.forEach((mv) => {
-                            if (mvElements) {
-                                mvElements.forEach((mvElement) => {
-                                    if (mvElement.innerText.includes(mv)) {
-                                        setTimeout(() => {
-                                            product.style.display = "none";
-                                        }, timeDelay);
-                                        counter++;
-                                        return;
-                                    }
-                                });
-                            } else {
-                                setTimeout(() => {
-                                    product.style.display = "none";
-                                }, timeDelay);
-                                counter++;
-                                return;
-                            }
-                        });
+                        if (mvs.length !== 0) {
+                            mvs.forEach((mv) => {
+                                if (mvElements) {
+                                    mvElements.forEach((mvElement) => {
+                                        if (mvElement.innerText.includes(mv)) {
+                                            setTimeout(() => {
+                                                product.style.display = "none";
+                                            }, timeDelay);
+                                            counter++;
+                                            return;
+                                        }
+                                    });
+                                }
+                            });
+                        } else {
+                            setTimeout(() => {
+                                product.style.display = "none";
+                            }, timeDelay);
+                            counter++;
+                            return;
+                        }
                     }
                 }
             } else if (image_url_filter_type === "whitelist") {
                 let isWhitelisted = false;
                 for (const [url, mvs] of Object.entries(image_urls)) {
                     if (imageElementSrc.includes(url)) {
-                        mvs.forEach((mv) => {
-                            if (mvElements) {
-                                mvElements.forEach((mvElement) => {
-                                    if (mvElement.innerText.includes(mv)) {
-                                        isWhitelisted = true;
-                                    }
-                                });
-                            } else {
-                                isWhitelisted = true;
-                            }
-                        });
+                        if (mvs.length !== 0) {
+                            mvs.forEach((mv) => {
+                                if (mvElements) {
+                                    mvElements.forEach((mvElement) => {
+                                        if (mvElement.innerText.includes(mv)) {
+                                            isWhitelisted = true;
+                                        }
+                                    });
+                                }
+                            });
+                        } else {
+                            isWhitelisted = true;
+                        }
                     }
                 }
                 if (!isWhitelisted) {
