@@ -69,6 +69,12 @@ function filterProducts() {
                                         return;
                                     }
                                 });
+                            } else {
+                                setTimeout(() => {
+                                    product.style.display = "none";
+                                }, timeDelay);
+                                counter++;
+                                return;
                             }
                         });
                     }
@@ -84,6 +90,8 @@ function filterProducts() {
                                         isWhitelisted = true;
                                     }
                                 });
+                            } else {
+                                isWhitelisted = true;
                             }
                         });
                     }
