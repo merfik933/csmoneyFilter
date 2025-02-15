@@ -26,66 +26,25 @@
     </section>
 
     <section class="blacklist-filter">
-        <h2>Чорний\Білий список</h2>
-        <div class="row">
-            <div class="column" id="image-filter">
-                <h3>
-                    <input type="checkbox" id="image-filter-checkbox">
-                    Фільтр по url зображень
-                </h3>
-                <select id="image-filter-type">
-                    <option value="blacklist">Чорний список</option>
-                    <option value="whitelist">Білий список</option>
-                </select>
-                <div class="dropdown">
-                    <button class="dropbtn">Вибрати url зображення ></button>
-                    <button id="delete-all-image-urls" class="delete-all">Очистити</button>
-                    <div class="dropdown-content">
-                        <button class="add-new" id="add-new-url">Додати новий</button>
-                    </div>
-                </div>
-                <p>Або завантажте файл з url зображень:</p>
-                <input id="upload-image-urls" type="file" id="image-filter-file" accept=".csv">
-            </div>
-            <div class="column" id="mv-filter">
-                <h3>
-                    <input type="checkbox" id="mv-filter-checkbox">
-                    Фільтр по MV/FN/т.д.
-                </h3>
-                <div class="blacklist-box">
-                    <h4>
-                        <input type="checkbox" id="mv-filter-blacklist-checkbox">
-                        Чорний список:
-                    </h4>
-                    <div class="dropdown blacklist">
-                        <button class="dropbtn">Вибрати MV/FN/т.д. ></button>
-                        <button id="delete-all-blacklist-mv" class="delete-all">Очистити</button>
-                        <div class="dropdown-content">
-                            <button class="add-new" id="add-new-mv">Додати новий</button>
-                        </div>
-                    </div>
-                    <p>Aбо завантажте файл з MV/FN/т.д.:</p>
-                    <input id="upload-mv-blacklist" type="file" id="mv-filter-file" accept=".csv">
-                </div>
-                <div class="whitelist-box">
-                    <h4>
-                        <input type="checkbox" id="mv-filter-whitelist-checkbox">
-                        Білий список:
-                    </h4>
-                    <div class="dropdown whitelist">
-                        <button class="dropbtn">Вибрати MV/FN/т.д. ></button>
-                        <button id="delete-all-whitelist-mv" class="delete-all">Очистити</button>
-                        <div class="dropdown-content">
-                            <button class="add-new" id="add-new-mv">Додати новий</button>
-                        </div>
-                    </div>
-                    <p>Aбо завантажте файл з MV/FN/т.д.:</p>
-                    <input id="upload-mv-whitelist" type="file" id="mv-filter-file" accept=".csv">
-                </div>
+        <h2>
+            <input type="checkbox" id="image-filter-checkbox">
+            Чорний\Білий список
+        </h2>
+        <select id="image-filter-type">
+            <option value="blacklist">Чорний список</option>
+            <option value="whitelist">Білий список</option>
+        </select>
+        <div class="dropdown row">
+            <button class="dropbtn">Вибрати url зображення ></button>
+            <button id="delete-all-image-urls" class="delete-all">Очистити</button>
+            <div class="dropdown-content">
+                <button class="add-new" id="add-new-url">Додати новий</button>
             </div>
         </div>
-    </section>  
-    
+        <p>Або завантажте файл з url зображень:</p>
+        <input id="upload-image-urls" type="file" id="image-filter-file" accept=".csv">
+    </section>
+
     <section class="settings">
         <h2>Налаштування</h2>
         <div class="row">
@@ -96,7 +55,7 @@
             </label>
         </div>
     </div>
-    
+
     <div class="apply-filter-container">
         <button id="apply-filter">Застосувати фільтр</button>
     </div>

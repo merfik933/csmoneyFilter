@@ -3,38 +3,12 @@ const maxRangeInput = document.getElementById("max-range");
 const delayInput = document.getElementById("delay");
 
 const addNew = document.querySelectorAll(".add-new");
-
 const uploadImageUrlsCsv = document.getElementById("upload-image-urls");
-const uploadMvBlacklistCsv = document.getElementById("upload-mv-blacklist");
-const uploadMvWhitelistCsv= document.getElementById("upload-mv-whitelist");
-
 const deleteAllImageUrls = document.getElementById("delete-all-image-urls");
-const deleteAllMvBlacklist = document.getElementById("delete-all-blacklist-mv");
-const deleteAllMvWhitelist = document.getElementById("delete-all-whitelist-mv");
 
 deleteAllImageUrls.addEventListener("click", () => {
     const imageList = document.querySelector("#image-filter .dropdown-content");
     const items = imageList.querySelectorAll(".list-item");
-    items.forEach((item) => {
-        if (!item.classList.contains("add-new")) {
-            item.remove();
-        }
-    });
-});
-
-deleteAllMvBlacklist.addEventListener("click", () => {
-    const blacklist = document.querySelector("#mv-filter .blacklist .dropdown-content");
-    const items = blacklist.querySelectorAll(".list-item");
-    items.forEach((item) => {
-        if (!item.classList.contains("add-new")) {
-            item.remove();
-        }
-    });
-});
-
-deleteAllMvWhitelist.addEventListener("click", () => {
-    const whitelist = document.querySelector("#mv-filter .whitelist .dropdown-content");
-    const items = whitelist.querySelectorAll(".list-item");
     items.forEach((item) => {
         if (!item.classList.contains("add-new")) {
             item.remove();
@@ -73,69 +47,6 @@ uploadImageUrlsCsv.addEventListener("change", (event) => {
     reader.readAsText(event.target.files[0]);
 });
 
-uploadMvBlacklistCsv.addEventListener("change", (event) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        const csv = e.target.result;
-        const lines = csv.split("\n");
-        const blacklist = document.querySelector("#mv-filter .blacklist .dropdown-content");
-        lines.forEach((line) => {
-            const newItemElement = document.createElement("div");
-            newItemElement.className = "list-item";
-            
-            const deleteButton = document.createElement("div");
-            deleteButton.className = "delete-button";
-            const deleteIcon = document.createElement("span");
-            deleteIcon.className = "material-symbols-outlined";
-            deleteIcon.textContent = "delete";
-            deleteButton.appendChild(deleteIcon);
-            deleteButton.addEventListener("click", () => {
-                newItemElement.remove();
-            });
-
-            const text = document.createElement("p");
-            text.textContent = line;
-
-            newItemElement.appendChild(deleteButton);
-            newItemElement.appendChild(text);
-            blacklist.appendChild(newItemElement);
-        });
-    };
-    reader.readAsText(event.target.files[0]);
-});
-
-uploadMvWhitelistCsv.addEventListener("change", (event) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        const csv = e.target.result;
-        const lines = csv.split("\n");
-        const whitelist = document.querySelector("#mv-filter .whitelist .dropdown-content");
-        lines.forEach((line) => {
-            const newItemElement = document.createElement("div");
-            newItemElement.className = "list-item";
-            
-            const deleteButton = document.createElement("div");
-            deleteButton.className = "delete-button";
-            const deleteIcon = document.createElement("span");
-            deleteIcon.className = "material-symbols-outlined";
-            deleteIcon.textContent = "delete";
-            deleteButton.appendChild(deleteIcon);
-            deleteButton.addEventListener("click", () => {
-                newItemElement.remove();
-            });
-
-            const text = document.createElement("p");
-            text.textContent = line;
-
-            newItemElement.appendChild(deleteButton);
-            newItemElement.appendChild(text);
-            whitelist.appendChild(newItemElement);
-        });
-    };
-    reader.readAsText(event.target.files[0]);
-});
-
-
 addNew.forEach((element) => {
     element.addEventListener("click", () => {
         const newItem = prompt("Enter new item:");
@@ -164,7 +75,7 @@ addNew.forEach((element) => {
 });
 
 // get data from storage
-chrome.storage.local.get(["min", "max", "delay", "is_image_url_checked", "image_url_filter_type", "image_urls", "is_mv_url_checked", "is_mv_blacklist_checked", "blacklisted_mvs_list", "is_mv_whitelist_checked", "whitelisted_mvs_list"], (data) => {
+chrome.storage.local.get(["min", "max", "delay", "is_image_url_checked", "image_url_filter_type", "image_urls"], (data) => {
     if (data.min !== undefined) minRangeInput.value = data.min;
     if (data.max !== undefined) maxRangeInput.value = data.max;
     if (data.delay !== undefined) delayInput.value = data.delay;
@@ -172,7 +83,7 @@ chrome.storage.local.get(["min", "max", "delay", "is_image_url_checked", "image_
     if (data.is_image_url_checked !== undefined) document.getElementById("image-filter-checkbox").checked = data.is_image_url_checked;
     if (data.image_url_filter_type !== undefined) document.getElementById("image-filter-type").value = data.image_url_filter_type;
     if (data.image_urls !== undefined) {
-        const imageList = document.querySelector("#image-filter .dropdown-content");
+        const imageList = document.querySelector(".dropdown-content");
         data.image_urls.forEach((url) => {
             const newItemElement = document.createElement("div");
             newItemElement.className = "list-item";
@@ -195,58 +106,6 @@ chrome.storage.local.get(["min", "max", "delay", "is_image_url_checked", "image_
             imageList.appendChild(newItemElement);
         });
     }
-
-    if (data.is_mv_url_checked !== undefined) document.getElementById("mv-filter-checkbox").checked = data.is_mv_url_checked;
-    if (data.is_mv_blacklist_checked !== undefined) document.getElementById("mv-filter-blacklist-checkbox").checked = data.is_mv_blacklist_checked;
-    if (data.blacklisted_mvs_list !== undefined) {
-        const blacklist = document.querySelector("#mv-filter .blacklist .dropdown-content");
-        data.blacklisted_mvs_list.forEach((url) => {
-            const newItemElement = document.createElement("div");
-            newItemElement.className = "list-item";
-            
-            const deleteButton = document.createElement("div");
-            deleteButton.className = "delete-button";
-            const deleteIcon = document.createElement("span");
-            deleteIcon.className = "material-symbols-outlined";
-            deleteIcon.textContent = "delete";
-            deleteButton.appendChild(deleteIcon);
-            deleteButton.addEventListener("click", () => {
-                newItemElement.remove();
-            });
-
-            const text = document.createElement("p");
-            text.textContent = url;
-
-            newItemElement.appendChild(deleteButton);
-            newItemElement.appendChild(text);
-            blacklist.appendChild(newItemElement);
-        });
-    }
-    if (data.is_mv_whitelist_checked !== undefined) document.getElementById("mv-filter-whitelist-checkbox").checked = data.is_mv_whitelist_checked;
-    if (data.whitelisted_mvs_list !== undefined) {
-        const whitelist = document.querySelector("#mv-filter .whitelist .dropdown-content");
-        data.whitelisted_mvs_list.forEach((url) => {
-            const newItemElement = document.createElement("div");
-            newItemElement.className = "list-item";
-            
-            const deleteButton = document.createElement("div");
-            deleteButton.className = "delete-button";
-            const deleteIcon = document.createElement("span");
-            deleteIcon.className = "material-symbols-outlined";
-            deleteIcon.textContent = "delete";
-            deleteButton.appendChild(deleteIcon);
-            deleteButton.addEventListener("click", () => {
-                newItemElement.remove();
-            });
-
-            const text = document.createElement("p");
-            text.textContent = url;
-
-            newItemElement.appendChild(deleteButton);
-            newItemElement.appendChild(text);
-            whitelist.appendChild(newItemElement);
-        });
-    }
 });
 
 // apply button
@@ -259,28 +118,14 @@ applyButton.addEventListener("click", () => {
 
     const is_image_url_checked = document.getElementById("image-filter-checkbox").checked;
     const image_url_filter_type = document.getElementById("image-filter-type").value;
-    const image_url_list = document.querySelectorAll("#image-filter .list-item p");
+    const image_url_list = document.querySelectorAll(".list-item p");
     let image_urls = [];
     image_url_list.forEach((element) => {
         image_urls.push(element.textContent);
     });
 
-    const is_mv_url_checked = document.getElementById("mv-filter-checkbox").checked;
-    const is_mv_blacklist_checked = document.getElementById("mv-filter-blacklist-checkbox").checked;
-    const blacklisted_mvs = document.querySelectorAll("#mv-filter .blacklist .list-item p");
-    let blacklisted_mvs_list = [];
-    blacklisted_mvs.forEach((element) => {
-        blacklisted_mvs_list.push(element.textContent);
-    });
-    const is_mv_whitelist_checked = document.getElementById("mv-filter-whitelist-checkbox").checked;
-    const whitelisted_mvs = document.querySelectorAll("#mv-filter .whitelist .list-item p");
-    let whitelisted_mvs_list = [];
-    whitelisted_mvs.forEach((element) => {
-        whitelisted_mvs_list.push(element.textContent);
-    });
-
     if (min <= max) {
-        chrome.storage.local.set({ min, max, delay, is_image_url_checked, image_url_filter_type, image_urls, is_mv_url_checked, is_mv_blacklist_checked, blacklisted_mvs_list, is_mv_whitelist_checked, whitelisted_mvs_list });
+        chrome.storage.local.set({ min, max, delay, is_image_url_checked, image_url_filter_type, image_urls });
 
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.tabs.sendMessage(tabs[0].id, {
@@ -291,11 +136,6 @@ applyButton.addEventListener("click", () => {
                 is_image_url_checked,
                 image_url_filter_type,
                 image_urls,
-                is_mv_url_checked,
-                is_mv_blacklist_checked,
-                blacklisted_mvs_list,
-                is_mv_whitelist_checked,
-                whitelisted_mvs_list
             });
         });
     } else {

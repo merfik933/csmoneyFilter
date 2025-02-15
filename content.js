@@ -5,31 +5,24 @@ let maxDiscount = 100;
 
 let is_image_url_checked = false;
 let image_url_filter_type = "blacklist";
-let image_urls = [];
-
-let is_mv_checked = false;
-let is_mv_blacklist_checked = false;
-let blacklisted_mvs_list = [];
-let is_mv_whitelist_checked = false;
-let whitelisted_mvs_list = [];
+let image_urls = {};
 
 let timeDelay = 700;
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.action === "applyFilter") {        
+    if (message.action === "applyFilter") {
         minDiscount = message.min;
         maxDiscount = message.max;
         timeDelay = message.delay;
 
         is_image_url_checked = message.is_image_url_checked;
         image_url_filter_type = message.image_url_filter_type;
-        image_urls = message.image_urls;
-
-        is_mv_checked = message.is_mv_url_checked;
-        is_mv_blacklist_checked = message.is_mv_blacklist_checked;
-        blacklisted_mvs_list = message.blacklisted_mvs_list ? message.blacklisted_mvs_list.map(item => item.toUpperCase()) : [];
-        is_mv_whitelist_checked = message.is_mv_whitelist_checked;
-        whitelisted_mvs_list = message.whitelisted_mvs_list ? message.whitelisted_mvs_list.map(item => item.toUpperCase()) : [];
+        image_urls_string = message.image_urls;
+        image_urls = {};
+        image_urls_string.forEach((url) => {
+            elements = url.split(';');
+            image_urls[elements[0]] = elements.slice(1)
+        });
     }
 });
 
@@ -60,50 +53,48 @@ function filterProducts() {
         }
         if (is_image_url_checked) {
             const imageElementSrc = product.querySelector(".ImageZone_container__PLZCF").src;
-            if (image_url_filter_type === "blacklist") {
-                if (image_urls.includes(imageElementSrc)) {
-                    setTimeout(() => {
-                        product.style.display = "none";
-                    }, timeDelay);
-                    counter++;
-                    return;
-                }
-            } else {
-                if (!image_urls.includes(imageElementSrc)) {
-                    setTimeout(() => {
-                        product.style.display = "none";
-                    }, timeDelay);
-                    counter++;
-                    return;
-                }
-            }
-        }
-        if (is_mv_checked) {
             const mvElements = product.querySelectorAll("span.CsgoDescriptionSmallZone_token___Y7iq");
-            let is_filtered_blacklist = false;
-            let is_filtered_whitelist = true;
-            mvElements.forEach((element) => {
-                if (is_mv_blacklist_checked) {
-                    if (blacklisted_mvs_list.includes(element.innerText.trim().toUpperCase())) {
-                        is_filtered_blacklist = true;
-                        return;
+
+            if (image_url_filter_type === "blacklist") {
+                for (const [url, mvs] of Object.entries(image_urls)) {
+                    if (imageElementSrc.includes(url)) {
+                        mvs.forEach((mv) => {
+                            if (mvElements) {
+                                mvElements.forEach((mvElement) => {
+                                    if (mvElement.innerText.includes(mv)) {
+                                        setTimeout(() => {
+                                            product.style.display = "none";
+                                        }, timeDelay);
+                                        counter++;
+                                        return;
+                                    }
+                                });
+                            }
+                        });
                     }
                 }
-                if (is_mv_whitelist_checked) {
-                    if (whitelisted_mvs_list.includes(element.innerText.trim().toUpperCase())) {
-                        is_filtered_whitelist = false;
-                        return;
+            } else if (image_url_filter_type === "whitelist") {
+                let isWhitelisted = false;
+                for (const [url, mvs] of Object.entries(image_urls)) {
+                    if (imageElementSrc.includes(url)) {
+                        mvs.forEach((mv) => {
+                            if (mvElements) {
+                                mvElements.forEach((mvElement) => {
+                                    if (mvElement.innerText.includes(mv)) {
+                                        isWhitelisted = true;
+                                    }
+                                });
+                            }
+                        });
                     }
-                } else {
-                    is_filtered_whitelist = false;
                 }
-            });
-            if (is_filtered_blacklist || is_filtered_whitelist) {
-                setTimeout(() => {
-                    product.style.display = "none";
-                }, timeDelay);
-                counter++;
-                return;
+                if (!isWhitelisted) {
+                    setTimeout(() => {
+                        product.style.display = "none";
+                    }, timeDelay);
+                    counter++;
+                    return;
+                }
             }
         }
     });
