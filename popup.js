@@ -7,7 +7,7 @@ const uploadImageUrlsCsv = document.getElementById("upload-image-urls");
 const deleteAllImageUrls = document.getElementById("delete-all-image-urls");
 
 deleteAllImageUrls.addEventListener("click", () => {
-    const imageList = document.querySelector("#image-filter .dropdown-content");
+    const imageList = document.querySelector(".dropdown-content");
     const items = imageList.querySelectorAll(".list-item");
     items.forEach((item) => {
         if (!item.classList.contains("add-new")) {
@@ -21,7 +21,7 @@ uploadImageUrlsCsv.addEventListener("change", (event) => {
     reader.onload = (e) => {
         const csv = e.target.result;
         const lines = csv.split("\n");
-        const imageList = document.querySelector("#image-filter .dropdown-content");
+        const imageList = document.querySelector(".dropdown-content");
         lines.forEach((line) => {
             const newItemElement = document.createElement("div");
             newItemElement.className = "list-item";
