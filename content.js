@@ -7,6 +7,9 @@ let is_image_url_checked = false;
 let image_url_filter_type = "blacklist";
 let image_urls = {};
 
+let is_image_url_id_checked = false;
+let image_id_urls = {};
+
 let timeDelay = 700;
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -26,8 +29,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             } else {
                 image_urls[url] = [];
             }
-            
         });
+
+        is_image_url_id_checked = message.is_image_url_id_checked;
+        image_id_urls = message.image_id_urls;
     }
 });
 
@@ -114,8 +119,42 @@ function filterProducts() {
                 }
             }
         }
+
+        if (is_image_url_id_checked) {
+            const id = product.getAttribute("data-card-item-id");
+            // alert(id + "\n\n\n" + image_id_urls + "\n\n\n" + image_id_urls.includes(id));
+            if (image_id_urls.includes(id)) {
+                setTimeout(() => {
+                    product.style.display = "none";
+                }, timeDelay);
+                counter++;
+                return;
+            }
+        }
+
+        const buttonDelete = product.querySelector(".deleteButton") 
+        if (!buttonDelete) {
+            const button = document.createElement("button");
+            button.className = "deleteButton";
+            button.innerText = "X";
+            button.style.backgroundColor = "red";
+            button.style.width = "30px";
+            button.style.height = "30px";
+            button.style.position = "absolute";
+            button.style.top = "0";
+            button.style.left = "0";
+            button.style.borderRadius = "5px";
+            button.style.color = "white";
+            button.addEventListener("click", () => {
+                product.style.display = "none";
+                id = product.getAttribute("data-card-item-id");
+                image_id_urls.push(id);
+                chrome.runtime.sendMessage({ action: "addImageId", id: image_id_urls });
+            });
+            product.style.position = "relative";
+            product.appendChild(button);
+        }
     });
-    console.log(`Filtered ${counter} products. Time: ${new Date().toLocaleTimeString()}`);
     counter = 0;
 }
 

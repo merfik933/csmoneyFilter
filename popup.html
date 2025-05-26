@@ -28,7 +28,7 @@
     <section class="blacklist-filter">
         <h2>
             <input type="checkbox" id="image-filter-checkbox">
-            Чорний\Білий список
+            Фільтр за img+mw
         </h2>
         <select id="image-filter-type">
             <option value="blacklist">Чорний список</option>
@@ -43,6 +43,22 @@
         </div>
         <p>Або завантажте файл з url зображень:</p>
         <input id="upload-image-urls" type="file" id="image-filter-file" accept=".csv">
+    </section>
+
+    <section class="blacklist-id-filter">
+        <h2>
+            <input type="checkbox" id="image-id-filter-checkbox">
+            Фільтр за id
+        </h2>
+        <div class="dropdown row">
+            <button class="dropbtn">Вибрати id ></button>
+            <button id="delete-all-image-urls-id" class="delete-all">Очистити</button>
+            <div class="dropdown-id-content">
+                <button class="add-new-id" id="add-new-url">Додати новий</button>
+            </div>
+        </div>
+        <p>Або завантажте файл із списком id:</p>
+        <input id="upload-image-urls-id" type="file" id="image-filter-file" accept=".csv">
     </section>
 
     <section class="settings">
